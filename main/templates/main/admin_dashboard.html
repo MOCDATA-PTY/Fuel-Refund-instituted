@@ -1,12 +1,11 @@
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load custom_filters %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Fuel Refund Institute</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="icon" href="/static/images/logo.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Modern, refined design with the specific color palette */
         :root {
@@ -15,7 +14,6 @@
             --bright-red-orange: #FF3C1F;
             --bright-red-orange-hover: #e52d10;
             --vibrant-orange-yellow: #FFB300;
-            --vibrant-orange-yellow-hover: #e6a200;
             --sky-blue: #00B9F2;
             --sky-blue-hover: #0095c5;
             --light-gray: #f7f9fc;
@@ -28,6 +26,7 @@
             --danger-red: #dc3545;
             --border-color: #e9ecef;
             --table-hover: rgba(0, 30, 119, 0.05);
+            --transition: 0.25s ease;
         }
 
         [data-theme="dark"] {
@@ -49,12 +48,12 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: var(--dark-gray);
             line-height: 1.6;
             font-size: 16px;
             background-color: var(--light-gray);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color var(--transition), color var(--transition);
         }
 
         .container {
@@ -67,12 +66,13 @@
             font-weight: 600;
             line-height: 1.3;
             color: var(--deep-blue);
+            transition: color var(--transition);
         }
 
         a {
             text-decoration: none;
             color: var(--deep-blue);
-            transition: color 0.3s ease;
+            transition: color var(--transition);
         }
 
         a:hover {
@@ -87,7 +87,7 @@
             top: 0;
             z-index: 100;
             padding: 16px 0;
-            transition: all 0.3s ease;
+            transition: background-color var(--transition);
         }
 
         .header-content {
@@ -113,6 +113,7 @@
             color: var(--white);
             font-weight: bold;
             font-size: 20px;
+            transition: background-color var(--transition);
         }
 
         .company-name {
@@ -122,10 +123,12 @@
 
         .company-name .fuel {
             color: var(--deep-blue);
+            transition: color var(--transition);
         }
 
         .company-name .refund {
             color: var(--bright-red-orange);
+            transition: color var(--transition);
         }
 
         .user-actions {
@@ -136,15 +139,18 @@
 
         /* Button Styles */
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 10px 20px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 15px;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             border: none;
             cursor: pointer;
             text-align: center;
+            gap: 8px;
         }
 
         .btn-primary {
@@ -197,9 +203,11 @@
             border-radius: 6px;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             border: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-logout:hover {
@@ -220,7 +228,7 @@
             box-shadow: var(--soft-shadow);
             margin-bottom: 30px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform var(--transition), box-shadow var(--transition);
         }
 
         .card:hover {
@@ -261,7 +269,9 @@
             border: 1px solid var(--border-color);
             border-radius: 6px;
             font-size: 15px;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
+            background-color: var(--white);
+            color: var(--dark-gray);
         }
 
         .search-bar input:focus {
@@ -270,9 +280,33 @@
             box-shadow: 0 0 0 2px rgba(0, 185, 242, 0.2);
         }
 
+        /* Date inputs */
+        .date-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .date-input {
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all var(--transition);
+            background-color: var(--white);
+            color: var(--dark-gray);
+        }
+
+        .date-input:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 0 2px rgba(0, 185, 242, 0.2);
+        }
+
         /* Table Styles */
         .table-container {
             overflow-x: auto;
+            border-radius: 8px;
         }
 
         table {
@@ -287,9 +321,10 @@
             font-weight: 600;
             color: var(--deep-blue);
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color var(--transition);
             white-space: nowrap;
             position: relative;
+            border-bottom: 2px solid var(--border-color);
         }
 
         th:hover {
@@ -307,6 +342,7 @@
         td {
             padding: 15px;
             border-bottom: 1px solid var(--border-color);
+            transition: background-color var(--transition);
         }
 
         tr:last-child td {
@@ -330,7 +366,10 @@
             border-radius: 4px;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .btn-view:hover {
@@ -346,7 +385,7 @@
             color: var(--medium-gray);
             padding: 6px;
             border-radius: 4px;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -409,6 +448,7 @@
             background-color: rgba(0,0,0,0.5);
             z-index: 1000;
             overflow-y: auto;
+            backdrop-filter: blur(4px);
         }
 
         .modal-content {
@@ -421,6 +461,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             overflow: hidden;
             animation: modalFadeIn 0.3s ease;
+            transition: background-color var(--transition);
         }
 
         @keyframes modalFadeIn {
@@ -448,7 +489,7 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all var(--transition);
             background: none;
             border: none;
             padding: 0 5px;
@@ -482,6 +523,7 @@
             padding-bottom: 10px;
             border-bottom: 2px solid var(--bright-red-orange);
             position: relative;
+            transition: color var(--transition);
         }
 
         .detail-grid {
@@ -494,7 +536,7 @@
             padding: 15px;
             background-color: var(--light-gray);
             border-radius: 8px;
-            transition: transform 0.3s ease;
+            transition: transform var(--transition), background-color var(--transition);
         }
 
         .detail-item:hover {
@@ -506,12 +548,14 @@
             color: var(--medium-gray);
             margin-bottom: 5px;
             font-size: 0.9rem;
+            transition: color var(--transition);
         }
 
         .detail-value {
             font-size: 1rem;
             font-weight: 500;
             color: var(--dark-gray);
+            transition: color var(--transition);
         }
 
         .doc-list {
@@ -526,7 +570,7 @@
             background-color: var(--light-gray);
             border-radius: 8px;
             margin-bottom: 10px;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
         }
 
         .doc-item:hover {
@@ -585,21 +629,88 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
         }
 
         .theme-toggle:hover {
             background-color: var(--light-gray);
         }
 
+        /* Edit form styles */
+        .edit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--deep-blue);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all var(--transition);
+            background-color: var(--white);
+            color: var(--dark-gray);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 0 2px rgba(0, 185, 242, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
         /* Responsive styles */
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .container {
                 padding: 0 20px;
             }
             
             .search-bar {
+                flex-wrap: wrap;
+            }
+            
+            .date-group {
+                flex: 1 1 100%;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .search-bar {
                 flex-direction: column;
+            }
+            
+            .date-group {
+                flex-direction: column;
+                align-items: flex-start;
             }
             
             .detail-grid {
@@ -619,6 +730,10 @@
                 flex-direction: column;
                 gap: 5px;
             }
+            
+            .company-name span:not(.fuel):not(.refund) {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -627,7 +742,9 @@
     <header>
         <div class="container header-content">
             <div class="logo-container">
-                <div class="logo">FRI</div>
+                <div class="logo">
+                    <img src="/static/images/logo.jpg" alt="FRI Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
                 <div class="company-name">
                     <span class="fuel">FUEL</span> <span class="refund">REFUND INSTITUTE</span> - <span>Admin</span>
                 </div>
@@ -637,7 +754,9 @@
                 <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
                     <span id="themeIcon">🌙</span>
                 </button>
-                <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
+                <a href="{% url 'logout' %}" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
             </div>
         </div>
     </header>
@@ -663,15 +782,15 @@
             <div class="card-body">
                 <div class="search-bar">
                     <input type="text" id="searchInput" placeholder="Search by username, name, email...">
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <label for="fromDate" style="white-space: nowrap; margin-right: 5px;">From:</label>
+                    <div class="date-group">
+                        <label for="fromDate">From:</label>
                         <input type="date" id="fromDate" class="date-input">
-                        <label for="toDate" style="white-space: nowrap; margin-right: 5px;">To:</label>
+                        <label for="toDate">To:</label>
                         <input type="date" id="toDate" class="date-input">
                     </div>
-                    <button class="btn btn-primary" onclick="searchUsers()">
+                    <!-- <button class="btn btn-primary" onclick="searchUsers()">
                         <i class="fas fa-search"></i> Search
-                    </button>
+                    </button> -->
                     <button class="btn btn-secondary" onclick="clearSearch()">
                         <i class="fas fa-times"></i> Clear
                     </button>
@@ -704,7 +823,7 @@
                                 <td>{{ user.name }} {{ user.surname }}</td>
                                 <td>{{ user.email }}</td>
                                 <td class="hide-mobile">{{ user.business_name|default:"Individual" }}</td>
-                                <td class="hide-mobile">{{ user_docs|get_item:user|length }}</td>
+                                <td class="hide-mobile">{{ user.document_count }}</td>
                                 <td>
                                     <div class="action-group">
                                         <button class="btn-view" onclick="showUserDetails('{{ user.username }}', {{ user.id }})">
@@ -749,12 +868,51 @@
         </div>
     </div>
     
-    <!-- CSRF Token for AJAX requests -->
     <script>
+        // Store CSRF token for AJAX requests
         const csrfToken = "{{ csrf_token }}";
-    </script>
-    
-    <script>
+        
+        // Debounce function for better performance
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        // Search functionality with debounce
+        const debouncedSearch = debounce(function() {
+            searchUsers();
+        }, 300);
+        
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search input event listener
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
+            
+            // Date input event listeners
+            document.getElementById('fromDate').addEventListener('change', searchUsers);
+            document.getElementById('toDate').addEventListener('change', searchUsers);
+            
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Apply saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('themeIcon').textContent = '☀️';
+            }
+            
+            // Initial sort
+            sortTable(0);
+        });
+        
         // Search functionality
         function searchUsers() {
             const input = document.getElementById('searchInput');
@@ -890,6 +1048,7 @@
             }
             
             // Sort rows
+            const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
             rows.sort((a, b) => {
                 // Skip hidden rows
                 if (a.style.display === 'none' || b.style.display === 'none') {
@@ -904,12 +1063,24 @@
                     return sortDirection * (parseInt(aValue) - parseInt(bValue));
                 }
                 
-                // Text sort for other columns
-                return sortDirection * aValue.localeCompare(bValue);
+                // Text sort for other columns with proper localization
+                return sortDirection * collator.compare(aValue, bValue);
             });
             
-            // Reorder rows in the table
-            rows.forEach(row => tbody.appendChild(row));
+            // Reorder rows in the table (use document fragment for better performance)
+            const fragment = document.createDocumentFragment();
+            rows.forEach(row => fragment.appendChild(row));
+            tbody.appendChild(fragment);
+            
+            // Visual indicator of sort direction
+            const headers = table.querySelectorAll('th');
+            headers.forEach((header, index) => {
+                if (index === column) {
+                    header.setAttribute('data-sort', sortDirection === 1 ? 'asc' : 'desc');
+                } else {
+                    header.removeAttribute('data-sort');
+                }
+            });
         }
         
         // Modal functionality
@@ -1064,12 +1235,19 @@
         }
         
         // Close modal when clicking outside
-        window.onclick = function(event) {
+        window.addEventListener('click', function(event) {
             const modal = document.getElementById('userModal');
             if (event.target === modal) {
                 closeModal();
             }
-        };
+        });
+        
+        // Keyboard accessibility - close modal with Escape key
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
         
         // Document handling functions
         function downloadDocument(docId) {
@@ -1119,7 +1297,7 @@
                             <div class="edit-grid">
                                 <div class="form-group">
                                     <label for="edit-name">First Name</label>
-                                    <input type="text" id="edit-name" name="name" value="${userData.name || ''}" class="form-control">
+                                    <input type="text" id="edit-name" name="name" value="${userData.name || ''}" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="edit-middle-names">Middle Names</label>
@@ -1127,11 +1305,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="edit-surname">Surname</label>
-                                    <input type="text" id="edit-surname" name="surname" value="${userData.surname || ''}" class="form-control">
+                                    <input type="text" id="edit-surname" name="surname" value="${userData.surname || ''}" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="edit-email">Email</label>
-                                    <input type="email" id="edit-email" name="email" value="${userData.email || ''}" class="form-control">
+                                    <input type="email" id="edit-email" name="email" value="${userData.email || ''}" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="edit-phone">Phone</label>
@@ -1215,7 +1393,22 @@
             })
             .then(data => {
                 // Show success message
-                alert('User updated successfully');
+                const messageContainer = document.createElement('div');
+                messageContainer.className = 'message success';
+                messageContainer.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    User updated successfully
+                `;
+                
+                const existingMessages = document.querySelector('.messages');
+                if (existingMessages) {
+                    existingMessages.appendChild(messageContainer);
+                } else {
+                    const newMessages = document.createElement('div');
+                    newMessages.className = 'messages';
+                    newMessages.appendChild(messageContainer);
+                    document.querySelector('.main-content').insertBefore(newMessages, document.querySelector('.main-content').firstChild);
+                }
                 
                 // Close modal
                 closeModal();
@@ -1231,12 +1424,23 @@
                     row.setAttribute('data-name', `${userData.name} ${userData.surname}`);
                 }
                 
-                // Redirect to edit_user view (this is the approach in your views.py)
-                window.location.href = `/user/edit/${username}/`;
+                // Scroll to top to see the message
+                window.scrollTo({top: 0, behavior: 'smooth'});
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert(error.message || 'Error updating user');
+                
+                // Show error in the form
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'message error';
+                errorMessage.style.marginBottom = '20px';
+                errorMessage.innerHTML = `
+                    <i class="fas fa-times-circle"></i>
+                    ${error.message || 'Error updating user'}
+                `;
+                
+                const formButtons = document.querySelector('.form-buttons');
+                formButtons.parentNode.insertBefore(errorMessage, formButtons);
             });
         }
         
@@ -1254,9 +1458,37 @@
                     if (response.ok) {
                         // Remove row from table
                         const row = document.querySelector(`tr[data-username="${username}"]`);
-                        if (row) row.remove();
+                        if (row) {
+                            // Add fade-out animation
+                            row.style.transition = 'opacity 0.5s ease';
+                            row.style.opacity = '0';
+                            
+                            // Remove after animation completes
+                            setTimeout(() => {
+                                row.remove();
+                            }, 500);
+                        }
                         
-                        alert('User deleted successfully');
+                        // Show success message
+                        const messageContainer = document.createElement('div');
+                        messageContainer.className = 'message success';
+                        messageContainer.innerHTML = `
+                            <i class="fas fa-check-circle"></i>
+                            User ${username} deleted successfully
+                        `;
+                        
+                        const existingMessages = document.querySelector('.messages');
+                        if (existingMessages) {
+                            existingMessages.appendChild(messageContainer);
+                        } else {
+                            const newMessages = document.createElement('div');
+                            newMessages.className = 'messages';
+                            newMessages.appendChild(messageContainer);
+                            document.querySelector('.main-content').insertBefore(newMessages, document.querySelector('.main-content').firstChild);
+                        }
+                        
+                        // Scroll to top to see the message
+                        window.scrollTo({top: 0, behavior: 'smooth'});
                     } else {
                         return response.json().then(data => {
                             throw new Error(data.error || 'Failed to delete user');
@@ -1265,7 +1497,27 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert(error.message || 'Error deleting user');
+                    
+                    // Create error message
+                    const messageContainer = document.createElement('div');
+                    messageContainer.className = 'message error';
+                    messageContainer.innerHTML = `
+                        <i class="fas fa-times-circle"></i>
+                        ${error.message || 'Error deleting user'}
+                    `;
+                    
+                    const existingMessages = document.querySelector('.messages');
+                    if (existingMessages) {
+                        existingMessages.appendChild(messageContainer);
+                    } else {
+                        const newMessages = document.createElement('div');
+                        newMessages.className = 'messages';
+                        newMessages.appendChild(messageContainer);
+                        document.querySelector('.main-content').insertBefore(newMessages, document.querySelector('.main-content').firstChild);
+                    }
+                    
+                    // Scroll to top to see the message
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 });
             }
         }
@@ -1285,30 +1537,6 @@
                 themeIcon.textContent = '☀️';
             }
         }
-        
-        // Initial sort and theme setup on page load
-        window.onload = function() {
-            sortTable(0);
-            
-            // Setup theme toggle button
-            const themeToggleBtn = document.getElementById('themeToggle');
-            themeToggleBtn.addEventListener('click', toggleTheme);
-            
-            // Apply saved theme if exists
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                document.getElementById('themeIcon').textContent = '☀️';
-            }
-            
-            // Add keypress event for search
-            document.getElementById('searchInput').addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    searchUsers();
-                }
-            });
-        };
     </script>
 </body>
 </html>
-{% endblock %}

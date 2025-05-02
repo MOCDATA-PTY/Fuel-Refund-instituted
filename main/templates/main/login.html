@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Fuel Refund Institute</title>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="icon" href="/static/images/logo.jpg" type="image/jpeg">
     <style>
-        /* Modern, refined design with the specific color palette */
+        /* Color palette */
         :root {
-            --deep-blue: #001E77;        /* Primary: Used for text and key elements */
-            --bright-red-orange: #FF3C1F; /* Accent: Left arrow and "REFUND INSTITUTE" */
-            --vibrant-orange-yellow: #FFB300; /* Accent: Right arrow and orange droplet */
-            --sky-blue: #00B9F2;         /* Accent: Left arrow and blue droplet */
-            --light-gray: #f7f9fc;       /* Slightly softer background */
-            --white: #FFFFFF;            /* Background */
-            --dark-gray: #333333;        /* Text color */
-            --medium-gray: #666666;      /* Secondary text */
+            --deep-blue: #001E77;
+            --bright-red-orange: #FF3C1F;
+            --vibrant-orange-yellow: #FFB300;
+            --sky-blue: #00B9F2;
+            --light-gray: #f7f9fc;
+            --white: #FFFFFF;
+            --dark-gray: #333333;
+            --medium-gray: #666666;
             --soft-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
@@ -27,8 +28,6 @@
 
         html, body {
             height: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
         }
 
         body {
@@ -48,19 +47,13 @@
             width: 100%;
         }
 
-        /* Enhanced Header styles with smoother shadow */
+        /* Header */
         header {
             background-color: var(--white);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             padding: 15px 0;
             width: 100%;
             z-index: 100;
-            transition: all 0.3s ease;
-        }
-
-        header.scrolled {
-            padding: 10px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .header-content {
@@ -91,7 +84,6 @@
         .business-name {
             font-size: 24px;
             font-weight: 700;
-            letter-spacing: -0.5px;
         }
 
         .business-name .fuel {
@@ -102,7 +94,7 @@
             color: var(--bright-red-orange);
         }
 
-        /* Improved navigation */
+        /* Navigation */
         .nav-links {
             display: flex;
             align-items: center;
@@ -119,7 +111,7 @@
             position: relative;
         }
 
-        .nav-links a:not(.btn):not(.btn-secondary):after {
+        .nav-links a:not(.login-btn):not(.signup-btn):after {
             content: '';
             position: absolute;
             width: 0;
@@ -127,11 +119,11 @@
             bottom: 0;
             left: 50%;
             background-color: var(--bright-red-orange);
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             transform: translateX(-50%);
         }
 
-        .nav-links a:not(.btn):not(.btn-secondary):hover:after {
+        .nav-links a:not(.login-btn):not(.signup-btn):hover:after {
             width: 80%;
         }
 
@@ -143,10 +135,6 @@
             color: var(--bright-red-orange);
         }
 
-        .nav-links a.active:after {
-            width: 80%;
-        }
-
         /* Login and Signup buttons */
         .login-btn, .signup-btn {
             color: var(--sky-blue);
@@ -154,7 +142,7 @@
             padding: 8px 16px;
             border-radius: 6px;
             font-size: 15px;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
             background: transparent;
             text-decoration: none;
         }
@@ -164,7 +152,11 @@
             transform: translateY(-2px);
         }
 
-        /* Page structure */
+        .login-btn.active {
+            color: var(--bright-red-orange);
+        }
+
+        /* Login page */
         .login-page {
             flex: 1;
             display: flex;
@@ -182,6 +174,18 @@
             padding: 40px;
             text-align: center;
             margin: 0 20px;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-header {
@@ -224,21 +228,12 @@
             border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s;
-            box-sizing: border-box;
         }
 
         .form-control:focus {
             border-color: var(--sky-blue);
             outline: none;
             box-shadow: 0 0 0 3px rgba(0, 185, 242, 0.15);
-        }
-
-        .errorlist {
-            list-style: none;
-            color: var(--bright-red-orange);
-            margin: 5px 0 0;
-            padding: 0;
-            font-size: 14px;
         }
 
         .form-submit {
@@ -304,7 +299,7 @@
             border-left: 4px solid #b71c1c;
         }
 
-        /* Mobile menu for smaller screens */
+        /* Mobile menu */
         .mobile-menu-toggle {
             display: none;
             flex-direction: column;
@@ -321,10 +316,9 @@
             background-color: var(--deep-blue);
             display: block;
             border-radius: 3px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
-        /* Mobile menu overlay */
         .mobile-menu-overlay {
             display: none;
             position: fixed;
@@ -336,16 +330,14 @@
             z-index: 101;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         /* Responsive styles */
         @media (max-width: 768px) {
             .mobile-menu-toggle {
                 display: flex;
-                position: absolute;
-                right: 20px;
-                top: 20px;
+                position: relative;
             }
             
             .mobile-menu-overlay {
@@ -363,7 +355,7 @@
                 flex-direction: column;
                 align-items: flex-start;
                 padding: 80px 20px 20px;
-                transition: right 0.3s ease;
+                transition: right 0.3s;
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
                 z-index: 102;
             }
@@ -375,11 +367,6 @@
             .nav-links a {
                 margin: 10px 0;
                 width: 100%;
-            }
-            
-            .nav-links .login-btn, .nav-links .signup-btn {
-                margin: 10px 0;
-                width: auto;
             }
             
             .mobile-menu-overlay.active {
@@ -404,24 +391,7 @@
             }
         }
 
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Helper for Django forms */
-        p {
-            margin: 0 0 15px;
-        }
-
-        /* Utility class for preventing scroll when mobile menu is open */
+        /* No-scroll utility */
         .no-scroll {
             overflow: hidden;
         }
@@ -463,13 +433,13 @@
 
     <!-- Login Page -->
     <section class="login-page">
-        <div class="login-container fade-in">
+        <div class="login-container">
             <div class="login-header">
                 <h1>Welcome Back</h1>
                 <p>Sign in to access your account</p>
             </div>
             
-            <!-- Uncomment this section if you have form errors -->
+            <!-- Uncomment this section for form errors -->
             <!-- 
             <div class="alert alert-error">
                 <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>
@@ -479,7 +449,6 @@
             
             <div class="login-form">
                 <form method="post" action="/login/">
-                    <!-- Add your CSRF token here if needed -->
                     {% csrf_token %}
                     
                     <div class="form-group">
@@ -504,30 +473,8 @@
         </div>
     </section>
 
-    <!-- Added Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
-    <!-- JavaScript for enhanced UI interactions -->
+    <!-- JavaScript -->
     <script>
-        // Script for sticky header
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Animation on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            fadeElements.forEach(element => {
-                element.classList.add('visible');
-            });
-        });
-
         // Mobile menu toggle
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
         const navLinks = document.querySelector('.nav-links');
